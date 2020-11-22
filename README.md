@@ -1,6 +1,6 @@
 # CSE 360 Final Project
 
-Repo for final Intro to Software Engineering project!
+Repo for final Intro to Software Engineering project! Allowed frameworks limited to Java AWT, Java Swing, and JFreeChart external library.
 
 ### Team Members
 
