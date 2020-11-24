@@ -9,3 +9,4 @@ target/
 
 # Project Dependencies
 lib/
+/bin/
