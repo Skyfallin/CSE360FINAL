@@ -9,3 +9,7 @@ target/
 
 # Project Dependencies
 lib/
+
+# Eclipse
+.classpath
+.project
