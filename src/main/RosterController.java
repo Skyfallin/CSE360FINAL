@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class RosterController implements ActionListener {
 
@@ -32,9 +33,12 @@ public class RosterController implements ActionListener {
         if (command.equals("About")) {
             rosterView.setAboutVisible(true);
         } else if (command.equals("Load a Roster")){
-            rosterModel.createStudentMap(rosterView.openFileChooser());
-            //rosterModel.createStudentMap();
-            rosterView.drawJTable(rosterModel.getStudentMap());
+            File file = rosterView.openFileChooser();
+            if (file != null){
+                rosterModel.createStudentMap(file);
+                rosterView.drawJTable(rosterModel.getStudentMap());
+            }
+
         }
     }
 }

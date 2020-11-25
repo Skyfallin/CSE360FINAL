@@ -17,7 +17,9 @@ public class Roster {
 
 		view.registerListener(controller);
 		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		view.pack();
 		view.setSize(900, 520);
         view.setVisible(true);
+
     }
 }

@@ -3,6 +3,7 @@ package main;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
@@ -87,9 +88,14 @@ public class RosterView extends JFrame {
         }
 
         rosterTable = new JTable(rosterData, columnNames);
+        JTableHeader header = rosterTable.getTableHeader();
+        header.setBackground(Color.GRAY);
         JScrollPane sp = new JScrollPane(rosterTable);
-        displayPanel.add(sp);
-        displayPanel.setVisible(true);
+        rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.add(sp);
+        this.setVisible(true);
+        //displayPanel.setSize(850, 200);
+        //displayPanel.setVisible(true);
     }
 
     public File openFileChooser(){
