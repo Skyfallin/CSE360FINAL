@@ -1,6 +1,7 @@
 package main;
 
 public class Student {
+
     private double id;
     private String firstName;
     private String lastName;
