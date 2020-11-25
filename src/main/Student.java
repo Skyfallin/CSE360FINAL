@@ -2,18 +2,37 @@ package main;
 
 public class Student {
 
-    private double id;
+    private String id;
     private String firstName;
     private String lastName;
     private String programPlan;
     private String academicLevel;
     private String asurite;
 
-    public double getId() {
+    private int[] attendance;
+
+    public Student(String id, String firstName, String lastName, String programPlan, String academicLevel, String asurite){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.programPlan = programPlan;
+        this.academicLevel = academicLevel;
+        this.asurite = asurite;
+    }
+
+    public int[] getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(int[] attendance) {
+        this.attendance = attendance;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(String id) {
         this.id = id;
     }
 

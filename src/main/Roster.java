@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.*;
+
 public class Roster {
 
     /**
@@ -9,7 +11,13 @@ public class Roster {
     public static void main(String[] args) {
         // Schedule a job for the event-dispatching thread:
         // creating and showing this application's GUI.
-		RosterView test = new RosterView();
-        javax.swing.SwingUtilities.invokeLater(test::displayFrame);
+		RosterView view = new RosterView();
+		RosterModel model = new RosterModel();
+		RosterController controller = new RosterController(model, view);
+
+		view.registerListener(controller);
+		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		view.setSize(900, 520);
+        view.setVisible(true);
     }
 }

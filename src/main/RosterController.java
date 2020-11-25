@@ -24,6 +24,17 @@ public class RosterController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        String command = e.getActionCommand();
+        /*if (command.equals("Load a Roster")){
+            rosterModel.createStudentMap();
+            rosterView.update(rosterModel.getStudentMap());
+        }*/
+        if (command.equals("About")) {
+            rosterView.setAboutVisible(true);
+        } else if (command.equals("Load a Roster")){
+            rosterModel.createStudentMap(rosterView.openFileChooser());
+            //rosterModel.createStudentMap();
+            rosterView.drawJTable(rosterModel.getStudentMap());
+        }
     }
 }
