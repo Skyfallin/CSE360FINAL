@@ -1,8 +1,6 @@
 package main;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.File;
@@ -12,8 +10,8 @@ import java.util.Map;
 public class RosterView extends JFrame {
 
     private final JDialog aboutDialogue;
-    private JMenu fileMenu;
-    private JMenuItem aboutMenu;
+    private final JMenu fileMenu;
+    private final JMenuItem aboutMenu;
     private JTable rosterTable;
     private JPanel displayPanel;
 
@@ -97,8 +95,6 @@ public class RosterView extends JFrame {
         rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.add(sp);
         this.setVisible(true);
-        //displayPanel.setSize(850, 200);
-        //displayPanel.setVisible(true);
     }
 
     public File openFileChooser(){
