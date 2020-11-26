@@ -1,5 +1,7 @@
 package main;
 
+import java.util.HashMap;
+
 public class Student {
 
     private String id;
@@ -9,7 +11,7 @@ public class Student {
     private String academicLevel;
     private String asurite;
 
-    private int[] attendance;
+    private HashMap<Date, Integer> attendance;
 
     public Student(String id, String firstName, String lastName, String programPlan, String academicLevel, String asurite){
         this.id = id;
@@ -20,12 +22,8 @@ public class Student {
         this.asurite = asurite;
     }
 
-    public int[] getAttendance() {
+    public HashMap<Date, Integer> getAttendance() {
         return attendance;
-    }
-
-    public void setAttendance(int[] attendance) {
-        this.attendance = attendance;
     }
 
     public String getId() {

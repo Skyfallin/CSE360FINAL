@@ -79,11 +79,14 @@ public class RosterView extends JFrame {
 
     public void drawJTable(HashMap<String, Student> studentMap){
         int studentCount = 0;
-        String[] columnNames = {"ID", "First Name", "Last Name", "Program and Plan", "Academic Level", "ASURITE"};
+        String[] columnNames = {"ID", "First Name", "Last Name",
+                "Program and Plan", "Academic Level", "ASURITE"};
         String[][] rosterData = new String[studentMap.size()][6];
         for (Map.Entry mapElement : studentMap.entrySet()){
             Student temp = (Student) mapElement.getValue();
-            rosterData[studentCount] = new String[] {temp.getId(), temp.getFirstName(), temp.getLastName(), temp.getProgramPlan(), temp.getAcademicLevel(), temp.getAsurite()};
+            rosterData[studentCount] = new String[] {temp.getId(),
+                    temp.getFirstName(), temp.getLastName(),
+                    temp.getProgramPlan(), temp.getAcademicLevel(), temp.getAsurite()};
             studentCount++;
         }
 
