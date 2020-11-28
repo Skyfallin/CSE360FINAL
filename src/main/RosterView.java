@@ -60,9 +60,10 @@ public class RosterView extends JFrame {
 
     private JDialog createAboutDialog() {
         JDialog jDialog = new JDialog(this, "About");
-        JLabel jLabel = new JLabel("This is our final project!");
+        JLabel jLabel = new JLabel("This is our final project! Team members: Jessica Huber, Dimetrius Hightower");
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         jDialog.add(jLabel);
-        jDialog.setSize(200, 200);
+        jDialog.setSize(500, 200);
         jDialog.setVisible(false);
         return jDialog;
     }
@@ -96,6 +97,8 @@ public class RosterView extends JFrame {
         this.add(sp);
         this.setVisible(true);
     }
+
+    // todo: new draw table method w/ flexible size for attendance
 
     public File openFileChooser(){
         File f;
