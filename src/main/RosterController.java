@@ -6,8 +6,8 @@ import java.io.File;
 
 public class RosterController implements ActionListener {
 
-    private RosterModel rosterModel;
-    private RosterView rosterView;
+    private final RosterModel rosterModel;
+    private final RosterView rosterView;
 
     /**
      *
@@ -26,19 +26,25 @@ public class RosterController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
-        /*if (command.equals("Load a Roster")){
-            rosterModel.createStudentMap();
-            rosterView.update(rosterModel.getStudentMap());
-        }*/
-        if (command.equals("About")) {
-            rosterView.setAboutVisible(true);
-        } else if (command.equals("Load a Roster")){
-            File file = rosterView.openFileChooser();
-            if (file != null){
-                rosterModel.createStudentMap(file);
-                rosterView.drawJTable(rosterModel.getStudentMap());
+        switch (command) {
+            case "About":
+                rosterView.setAboutVisible(true);
+                break;
+            case "Load a Roster": {
+                File file = rosterView.openFileChooser();
+                if (file != null) {
+                    rosterModel.createStudentMap(file);
+                    rosterView.drawJTable(rosterModel.getStudentMap());
+                }
+                break;
             }
-
+            case "Add Attendance": {
+                File file = rosterView.openFileChooser();
+                if (file != null) {
+                    rosterModel.takeAttendance(file, new DatePicker(rosterView).getPickedDate());
+                }
+                break;
+            }
         }
     }
 }

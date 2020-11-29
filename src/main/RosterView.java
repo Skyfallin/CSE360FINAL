@@ -15,6 +15,9 @@ public class RosterView extends JFrame {
     private JTable rosterTable;
     private JPanel displayPanel;
 
+    /**
+     *
+     */
     public RosterView(){
         super("CSE360 Final Project");
         this.aboutDialogue = createAboutDialog();
@@ -43,6 +46,10 @@ public class RosterView extends JFrame {
 
     }
 
+    /**
+     *
+     * @param controller
+     */
     public void registerListener(RosterController controller){
         Component[] components = fileMenu.getMenuComponents();
         for (Component component: components){
@@ -58,12 +65,17 @@ public class RosterView extends JFrame {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private JDialog createAboutDialog() {
         JDialog jDialog = new JDialog(this, "About");
         JLabel jLabel = new JLabel("This is our final project! Team members: Jessica Huber, Dimetrius Hightower");
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         jDialog.add(jLabel);
         jDialog.setSize(500, 200);
+        jDialog.setLocationRelativeTo(null); // center
         jDialog.setVisible(false);
         return jDialog;
     }
@@ -76,7 +88,11 @@ public class RosterView extends JFrame {
         return aboutDialogue;
     }
 
-    public void drawJTable(HashMap<String, Student> studentMap){
+    /**
+     *
+     * @param studentMap
+     */
+    public void drawJTable(HashMap<String, Student> studentMap) {
         int studentCount = 0;
         String[] columnNames = {"ID", "First Name", "Last Name",
                 "Program and Plan", "Academic Level", "ASURITE"};
@@ -98,9 +114,11 @@ public class RosterView extends JFrame {
         this.setVisible(true);
     }
 
-    // todo: new draw table method w/ flexible size for attendance
-
-    public File openFileChooser(){
+    /**
+     *
+     * @return
+     */
+    public File openFileChooser() {
         File f;
         JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
@@ -110,78 +128,4 @@ public class RosterView extends JFrame {
         }
         return null;
     }
-/*
-    private final JDialog aboutDialogue;
-
-
-    public RosterView() {
-        super("CSE360 Final Project");
-        this.aboutDialogue = createAboutDialog();
-        // Create and set up the window.
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Create and set up the content pane.
-        this.setJMenuBar(createMenuBar());
-    }
-
-
-    public void displayFrame() {
-        // Display the window.
-        this.setSize(900, 520);
-        this.setVisible(true);
-    }
-
-
-    private JMenuBar createMenuBar() {
-
-        JMenu fileMenu, aboutMenu;
-
-        JMenuBar menuBar = new JMenuBar();
-
-        fileMenu = new JMenu("File");
-        menuBar.add(fileMenu);
-        JMenuItem rosterItem = new JMenuItem("Load a Roster");
-        fileMenu.add(rosterItem);
-        JMenuItem attendanceItem = new JMenuItem("Add Attendance");
-        fileMenu.add(attendanceItem);
-        JMenuItem saveItem = new JMenuItem("Save");
-        fileMenu.add(saveItem);
-        JMenuItem dataItem = new JMenuItem("Plot Data");
-        fileMenu.add(dataItem);
-
-        aboutMenu = new JMenu("About");
-        aboutMenu.addMenuListener(aboutMenuListener());
-        menuBar.add(aboutMenu);
-
-        return menuBar;
-    }
-
-    private JDialog createAboutDialog() {
-        JDialog jDialog = new JDialog(this, "About");
-        JLabel jLabel = new JLabel("This is our final project!");
-        jDialog.add(jLabel);
-        jDialog.setSize(200, 200);
-        jDialog.setVisible(false);
-        return jDialog;
-    }
-
-    private MenuListener aboutMenuListener() {
-        return new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent e) {
-                getAboutDialogue().setVisible(true);
-            }
-
-            @Override
-            public void menuDeselected(MenuEvent e) {}
-
-            @Override
-            public void menuCanceled(MenuEvent e) {}
-        };
-    }
-
-    public JDialog getAboutDialogue() {
-        return aboutDialogue;
-    }
-
- */
 }
