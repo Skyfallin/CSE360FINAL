@@ -1,18 +1,21 @@
 package main;
 
 import java.io.*;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class RosterModel {
-
+    private final char NEW_LINE= '\n', COMMA= ',';
     HashMap<String, Student> studentMap = new HashMap<>();
-
+    HashMap<String, Integer> attendanceMap = new HashMap<>();
+    ArrayList<Date> dates = new ArrayList<>();
     /**
      *
      * @param file
      */
     public void createStudentMap(File file) {
+        studentMap.clear();
+        attendanceMap.clear();
+        dates.clear();
         try {
             FileReader obj = new FileReader(file);
             BufferedReader br = new BufferedReader(obj);
@@ -20,7 +23,7 @@ public class RosterModel {
             while(line != null) {
                 String[] attributes = line.split(",");
                 Student student = createStudent(attributes);
-                studentMap.put(student.getAsurite(), student);
+                studentMap.put(attributes[5], student);
                 line = br.readLine();
             }
         } catch(IOException e) {
@@ -50,19 +53,67 @@ public class RosterModel {
      *
      * @param file
      */
-    public void takeAttendance(File file, Date date) {
+    public Date takeAttendance(File file, Date date) {
+        dates.add(date);
+        attendanceMap.clear();
         try {
             FileReader obj = new FileReader(file);
             BufferedReader br = new BufferedReader(obj);
             String line = br.readLine();
             while(line != null) {
                 String[] fields = line.split(",");
-                Student student = getStudent(fields[0]);
-                student.getAttendance().put(date, Integer.valueOf(fields[1]));
+                String key = fields[0];
+                if (attendanceMap.get(key) != null){
+                    attendanceMap.put(key, attendanceMap.get(key) + Integer.parseInt(fields[1]));
+                } else {
+                    attendanceMap.put(key, Integer.parseInt(fields[1]));
+                }
+
                 line = br.readLine();
             }
         } catch(IOException e) {
             System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        for (Student student: studentMap.values()){
+            student.getAttendance().put(date, attendanceMap.get(student.getAsurite()));
+            attendanceMap.remove(student.getAsurite());
+        }
+
+        return date;
+    }
+
+    public void save(String filePath){
+        try {
+            File outputFile = new File(filePath);
+
+            FileWriter outputWriter = new FileWriter((outputFile));
+            BufferedWriter bw = new BufferedWriter(outputWriter);
+            StringBuilder writeLine;
+            //HEADER
+            writeLine = new StringBuilder("ID,First Name,Last Name,Program and Plan,Academic Level,ASURITE");
+            for (Date date : dates) {
+                writeLine.append(COMMA).append(date);
+            }
+            bw.write(writeLine.toString() + NEW_LINE);
+            //ROWS
+            for (Student student : studentMap.values()){
+                writeLine = new StringBuilder();
+                writeLine.append(student.getId()).append(COMMA)
+                        .append(student.getFirstName()).append(COMMA)
+                        .append(student.getLastName()).append(COMMA)
+                        .append(student.getProgramPlan()).append(COMMA)
+                        .append(student.getAcademicLevel()).append(COMMA)
+                        .append(student.getAsurite());
+                for (Date date: dates){
+                    writeLine.append(COMMA).append(student.getAttendance().get(date));
+                }
+                bw.write(writeLine.toString() + NEW_LINE);
+            }
+            bw.close();
+        } catch (IOException e){
+            System.out.println("An error occurred when writing to file.");
             e.printStackTrace();
         }
     }
@@ -75,16 +126,9 @@ public class RosterModel {
         return studentMap;
     }
 
-    /**
-     *
-     * @param asurite
-     * @return
-     */
-    public Student getStudent(String asurite) {
-        for (Student student : studentMap.values()) {
-            if (student.getAsurite().equals(asurite))
-                return student;
-        }
-        return null;
+    public HashMap<String, Integer> getAttendanceMap(){ return attendanceMap; }
+
+    public ArrayList<Date> getDates(){
+        return dates;
     }
 }

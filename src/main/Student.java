@@ -21,7 +21,7 @@ public class Student {
         this.programPlan = programPlan;
         this.academicLevel = academicLevel;
         this.asurite = asurite;
-        attendance = new TreeMap<>();
+        this.attendance = new TreeMap<>();
     }
 
     public TreeMap<Date, Integer> getAttendance() {
@@ -75,4 +75,6 @@ public class Student {
     public void setAsurite(String asurite) {
         this.asurite = asurite;
     }
+
+
 }

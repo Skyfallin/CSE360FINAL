@@ -1,19 +1,29 @@
 package main;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class RosterView extends JFrame {
+    private final String[] HEADERS = {"ID", "First Name", "Last Name",
+            "Program and Plan", "Level", "ASURITE"};
+    private final int  SAVE_WIDTH = 300,
+            SAVE_HEIGHT = 100,
+            ATTENDANCE_WIDTH = 300,
+            ATTENDANCE_HEIGHT = 300;
 
     private final JDialog aboutDialogue;
     private final JMenu fileMenu;
     private final JMenuItem aboutMenu;
+    //private DefaultTableModel model = new DefaultTableModel();
     private JTable rosterTable;
     private JPanel displayPanel;
+    //private JTableHeader header;
+    private JScrollPane sp;
 
     /**
      *
@@ -44,6 +54,10 @@ public class RosterView extends JFrame {
         this.add(displayPanel);
         displayPanel.setVisible(false);
 
+        rosterTable = new JTable();
+        sp = new JScrollPane(rosterTable);
+        this.add(sp);
+        sp.setVisible(false);
     }
 
     /**
@@ -104,15 +118,65 @@ public class RosterView extends JFrame {
                     temp.getProgramPlan(), temp.getAcademicLevel(), temp.getAsurite()};
             studentCount++;
         }
-
-        rosterTable = new JTable(rosterData, columnNames);
-        JTableHeader header = rosterTable.getTableHeader();
-        header.setBackground(Color.GRAY);
-        JScrollPane sp = new JScrollPane(rosterTable);
-        rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        this.add(sp);
+        /*if (model.getRowCount() > 0){
+            for (int index = model.getRowCount() - 1; index > -1; index--){
+                model.removeRow(index);
+            }
+        }*/
+        //model = new DefaultTableModel(rosterData, columnNames);
+        DefaultTableModel model = new DefaultTableModel(rosterData, columnNames);
+        //rosterTable = new JTable(model);
+        rosterTable.setModel(model);
+        //JScrollPane sp = new JScrollPane(rosterTable);
+        //rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //this.add(sp);
+        sp.setVisible(true);
         this.setVisible(true);
     }
+
+    public void addAttendance(HashMap<String, Student> studentMap, HashMap<String, Integer> attendanceMap, ArrayList<Date> dates, Date date){
+        int entryCount = 0;
+        DefaultTableModel model = (DefaultTableModel) rosterTable.getModel();
+        Integer[] attendanceColumn = new Integer[studentMap.size()];
+        for (Student student : studentMap.values()){
+            attendanceColumn[entryCount] = student.getAttendance().get(date);
+            entryCount++;
+        }
+        model.addColumn(date, attendanceColumn);
+        rosterTable.setModel(model);
+        this.setVisible(true);
+
+        JPanel panel = new JPanel();
+        panel.setSize(ATTENDANCE_WIDTH, ATTENDANCE_HEIGHT);
+        //panel.setVisible(true);
+        JDialog attendanceDialog = new JDialog(this, "Add Attendance", true);
+        attendanceDialog.setSize(ATTENDANCE_WIDTH, ATTENDANCE_HEIGHT);
+         int attendanceEntryCount = 0;
+         for (Student student: studentMap.values()){
+             if (student.getAttendance().containsKey(date)){
+                 attendanceEntryCount++;
+             }
+         }
+         panel.add(new JLabel("Data loaded for " + attendanceEntryCount
+            + " user(s) in the roster.\n"));
+
+         if (!attendanceMap.isEmpty()){
+             panel.add(new JLabel("" + attendanceMap.size() +
+                " additional attendee(s) were found:\n"));
+             for (String asurite : attendanceMap.keySet()){
+                 panel.add(new JLabel("" + asurite + ", connected for "
+                    + attendanceMap.get(asurite) + " minute(s)."));
+             }
+         }
+         panel.validate();
+         attendanceDialog.add(panel);
+         attendanceDialog.setLocationRelativeTo(null);
+         panel.setVisible(true);
+         attendanceDialog.setVisible(true);
+
+    }
+
+
 
     /**
      *
@@ -127,5 +191,13 @@ public class RosterView extends JFrame {
             return f;
         }
         return null;
+    }
+
+    public void saveMessage(){
+        JDialog saveDialog = new JDialog(this, "Data Saved", true);
+        saveDialog.setSize(SAVE_WIDTH, SAVE_HEIGHT);
+        saveDialog.add(new JLabel("Data has been saved to rosterOutput.csv."));
+        saveDialog.setLocationRelativeTo(null);
+        saveDialog.setVisible(true);
     }
 }
