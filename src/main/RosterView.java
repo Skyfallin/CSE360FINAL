@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class RosterView extends JFrame {
     private final int  SAVE_WIDTH = 300,
             SAVE_HEIGHT = 100,
             ATTENDANCE_WIDTH = 300,
-            ATTENDANCE_HEIGHT = 300;
+            ATTENDANCE_HEIGHT = 300,
+            PLOT_WIDTH = 750,
+            PLOT_HEIGHT = 400;
 
     private final JDialog aboutDialogue;
     private final JMenu fileMenu;
@@ -128,7 +131,7 @@ public class RosterView extends JFrame {
         //rosterTable = new JTable(model);
         rosterTable.setModel(model);
         //JScrollPane sp = new JScrollPane(rosterTable);
-        //rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //this.add(sp);
         sp.setVisible(true);
         this.setVisible(true);
@@ -176,7 +179,16 @@ public class RosterView extends JFrame {
 
     }
 
+    public void plot(HashMap<String, Student> studentMap) {
+        SwingUtilities.invokeLater(()-> {
+            Plot plot = new Plot(studentMap, "Count of Students on Percent of Attendance by Date");
+            plot.setSize(PLOT_WIDTH, PLOT_HEIGHT);
+            plot.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            plot.setLocationRelativeTo(null);
+            plot.setVisible(true);
+        });
 
+    }
 
     /**
      *

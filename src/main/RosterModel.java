@@ -71,6 +71,7 @@ public class RosterModel {
 
                 line = br.readLine();
             }
+            br.close();
         } catch(IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

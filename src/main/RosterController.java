@@ -1,13 +1,17 @@
 package main;
 
+import org.jfree.chart.JFreeChart;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 public class RosterController implements ActionListener {
-
+    private final int PLOT_HEIGHT = 350, PLOT_WIDTH = 700;
     private final RosterModel rosterModel;
     private final RosterView rosterView;
 
@@ -65,10 +69,21 @@ public class RosterController implements ActionListener {
                 } catch (IOException e1){
                     e1.printStackTrace();
                 }
+                break;
+            }
+            case "Plot Data": {
+                SwingUtilities.invokeLater(() -> {
+                    Plot plot = new Plot(rosterModel.getStudentMap(),
+                            "Percent of Attendance of Students by Date ");
+                    plot.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    plot.setSize(PLOT_WIDTH, PLOT_HEIGHT);
+                    plot.setLocationRelativeTo(null);
+                    plot.setVisible(true);
+                });
+                //rosterView.plot(rosterModel.getStudentMap());
+                break;
             }
         }
-        /*case "Plot": {
 
-        }*/
     }
 }
