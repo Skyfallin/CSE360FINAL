@@ -240,4 +240,20 @@ public class RosterView extends JFrame {
         saveDialog.setLocationRelativeTo(null);
         saveDialog.setVisible(true);
     }
+
+    /**
+     * Grab the menu for testing purposes.
+     * @return A JMenu component
+     */
+    public JMenu getFileMenu() {
+        return fileMenu;
+    }
+
+    /**
+     * Grab the 'About' AbstractButton for testing
+     * @return an AbstractButton
+     */
+    public JMenuItem getAboutMenu() {
+        return aboutMenu;
+    }
 }

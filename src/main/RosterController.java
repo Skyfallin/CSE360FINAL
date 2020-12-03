@@ -93,4 +93,20 @@ public class RosterController implements ActionListener {
         }
 
     }
+
+    /**
+     *
+     * @return
+     */
+    public RosterView getRosterView() {
+        return rosterView;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public RosterModel getRosterModel() {
+        return rosterModel;
+    }
 }
