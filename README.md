@@ -9,4 +9,4 @@ Jessica Huber, Dimetrius Hightower
 ## Running tests w/ JUnit
 
 - Navigate to the test directory from the repo root
-- Do the tests or whatever...
+- Run each test method from the gutter or simply run program from test directory to test listener methods!
