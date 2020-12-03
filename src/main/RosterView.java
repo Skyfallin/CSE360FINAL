@@ -153,10 +153,10 @@ public class RosterView extends JFrame {
      * Updates the table with a table model containing the new attendance data.
      * Also draws a dialog box containing information on the attendance that
      * was added.
-     * @param studentMap
-     * @param attendanceMap
-     * @param dates
-     * @param date
+     * @param studentMap contains student data
+     * @param attendanceMap contains attendance data
+     * @param dates contains date data
+     * @param date current date being added
      */
     public void addAttendance(HashMap<String, Student> studentMap,
                               HashMap<String, Integer> attendanceMap,
@@ -218,7 +218,7 @@ public class RosterView extends JFrame {
 
     /**
      * Populates a File Chooser for the user to select a file load.
-     * @return
+     * @return f File to be read
      */
     public File openFileChooser() {
         File f = null;
