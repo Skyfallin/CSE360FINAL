@@ -1,8 +1,16 @@
 package main;
 
-import java.util.Date;
+/*
+ * @author: Jessica Huber and Dimetrius Hightower
+ * ClassID: 2020Fall-T-CSE360-70606
+ *  FINAL PROJECT
+ */
+
 import java.util.TreeMap;
 
+/**
+ * This class represents a Student object with several attributes.
+ */
 public class Student {
 
     private String id;
@@ -12,8 +20,17 @@ public class Student {
     private String academicLevel;
     private String asurite;
 
-    private final TreeMap<Date, Integer> attendance;
+    private final TreeMap<String, Integer> attendance;
 
+    /**
+     * This constructor initializes the values of the attributes of a student.
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param programPlan
+     * @param academicLevel
+     * @param asurite
+     */
     public Student(String id, String firstName, String lastName, String programPlan, String academicLevel, String asurite){
         this.id = id;
         this.firstName = firstName;
@@ -24,56 +41,60 @@ public class Student {
         this.attendance = new TreeMap<>();
     }
 
-    public TreeMap<Date, Integer> getAttendance() {
+    /**
+     * Attendance getter.
+     * @return attendance String
+     */
+    public TreeMap<String, Integer> getAttendance() {
         return attendance;
     }
 
+    /**
+     * ID getter.
+     * @return id String
+     */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    /**
+     * First name getter.
+     * @return firstName String
+     */
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
+    /**
+     * Last name getter.
+     * @return lastName String
+     */
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
+    /**
+     * Program Plan getter.
+     * @return programPlan String
+     */
     public String getProgramPlan() {
         return programPlan;
     }
 
-    public void setProgramPlan(String programPlan) {
-        this.programPlan = programPlan;
-    }
-
+    /**
+     * Academic level getter.
+     * @return academicLevel String
+     */
     public String getAcademicLevel() {
         return academicLevel;
     }
 
-    public void setAcademicLevel(String academicLevel) {
-        this.academicLevel = academicLevel;
-    }
-
+    /**
+     * Asurite getter.
+     * @return asurite String
+     */
     public String getAsurite() {
         return asurite;
-    }
-
-    public void setAsurite(String asurite) {
-        this.asurite = asurite;
     }
 
 

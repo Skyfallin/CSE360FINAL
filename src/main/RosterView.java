@@ -1,14 +1,24 @@
 package main;
 
+/*
+ * @author: Jessica Huber and Dimetrius Hightower
+ * ClassID: 2020Fall-T-CSE360-70606
+ *  FINAL PROJECT
+ */
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * The RosterView class is used to set up and initialize the GUI
+ * components as well as enabling the user to load and save files.
+ * It fulfills the 'view' component of the model, view, controller architecture.
+ */
 public class RosterView extends JFrame {
     private final String[] HEADERS = {"ID", "First Name", "Last Name",
             "Program and Plan", "Level", "ASURITE"};
@@ -17,19 +27,20 @@ public class RosterView extends JFrame {
             ATTENDANCE_WIDTH = 300,
             ATTENDANCE_HEIGHT = 300,
             PLOT_WIDTH = 750,
-            PLOT_HEIGHT = 400;
+            PLOT_HEIGHT = 400,
+            ABOUT_WIDTH = 500,
+            ABOUT_HEIGHT = 200,
+            NUM_DEFAULT_ATTRIBUTES = 6;
 
     private final JDialog aboutDialogue;
     private final JMenu fileMenu;
     private final JMenuItem aboutMenu;
-    //private DefaultTableModel model = new DefaultTableModel();
     private JTable rosterTable;
     private JPanel displayPanel;
-    //private JTableHeader header;
     private JScrollPane sp;
 
     /**
-     *
+     * Initializes the components of the GUI.
      */
     public RosterView(){
         super("CSE360 Final Project");
@@ -64,8 +75,8 @@ public class RosterView extends JFrame {
     }
 
     /**
-     *
-     * @param controller
+     *  Registers the menu items with listeners for the controller.
+     * @param controller object
      */
     public void registerListener(RosterController controller){
         Component[] components = fileMenu.getMenuComponents();
@@ -83,37 +94,46 @@ public class RosterView extends JFrame {
     }
 
     /**
-     *
-     * @return
+     * Creates the About pop-up box.
+     * @return jDialog for About
      */
     private JDialog createAboutDialog() {
         JDialog jDialog = new JDialog(this, "About");
-        JLabel jLabel = new JLabel("This is our final project! Team members: Jessica Huber, Dimetrius Hightower");
+        JLabel jLabel = new JLabel("This is our final project! Team members: " +
+                "Jessica Huber, Dimetrius Hightower");
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         jDialog.add(jLabel);
-        jDialog.setSize(500, 200);
+        jDialog.setSize(ABOUT_WIDTH, ABOUT_HEIGHT);
         jDialog.setLocationRelativeTo(null); // center
         jDialog.setVisible(false);
         return jDialog;
     }
 
+    /**
+     * Toggles the visibility of the About.
+     * @param b boolean
+     */
     public void setAboutVisible(boolean b){
         getAboutDialogue().setVisible(b);
     }
 
+    /**
+     * About dialog getter.
+     * @return aboutDialog JDialog
+     */
     public JDialog getAboutDialogue() {
         return aboutDialogue;
     }
 
     /**
-     *
-     * @param studentMap
+     * Draws the roster table from the data in the student map.
+     * @param studentMap contains the data for the roster
      */
     public void drawJTable(HashMap<String, Student> studentMap) {
         int studentCount = 0;
         String[] columnNames = {"ID", "First Name", "Last Name",
                 "Program and Plan", "Academic Level", "ASURITE"};
-        String[][] rosterData = new String[studentMap.size()][6];
+        String[][] rosterData = new String[studentMap.size()][NUM_DEFAULT_ATTRIBUTES];
         for (Map.Entry mapElement : studentMap.entrySet()){
             Student temp = (Student) mapElement.getValue();
             rosterData[studentCount] = new String[] {temp.getId(),
@@ -121,23 +141,26 @@ public class RosterView extends JFrame {
                     temp.getProgramPlan(), temp.getAcademicLevel(), temp.getAsurite()};
             studentCount++;
         }
-        /*if (model.getRowCount() > 0){
-            for (int index = model.getRowCount() - 1; index > -1; index--){
-                model.removeRow(index);
-            }
-        }*/
-        //model = new DefaultTableModel(rosterData, columnNames);
+
         DefaultTableModel model = new DefaultTableModel(rosterData, columnNames);
-        //rosterTable = new JTable(model);
         rosterTable.setModel(model);
-        //JScrollPane sp = new JScrollPane(rosterTable);
         rosterTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        //this.add(sp);
         sp.setVisible(true);
         this.setVisible(true);
     }
 
-    public void addAttendance(HashMap<String, Student> studentMap, HashMap<String, Integer> attendanceMap, ArrayList<Date> dates, Date date){
+    /**
+     * Updates the table with a table model containing the new attendance data.
+     * Also draws a dialog box containing information on the attendance that
+     * was added.
+     * @param studentMap
+     * @param attendanceMap
+     * @param dates
+     * @param date
+     */
+    public void addAttendance(HashMap<String, Student> studentMap,
+                              HashMap<String, Integer> attendanceMap,
+                              ArrayList<String> dates, String date){
         int entryCount = 0;
         DefaultTableModel model = (DefaultTableModel) rosterTable.getModel();
         Integer[] attendanceColumn = new Integer[studentMap.size()];
@@ -151,7 +174,6 @@ public class RosterView extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setSize(ATTENDANCE_WIDTH, ATTENDANCE_HEIGHT);
-        //panel.setVisible(true);
         JDialog attendanceDialog = new JDialog(this, "Add Attendance", true);
         attendanceDialog.setSize(ATTENDANCE_WIDTH, ATTENDANCE_HEIGHT);
          int attendanceEntryCount = 0;
@@ -179,6 +201,10 @@ public class RosterView extends JFrame {
 
     }
 
+    /**
+     * Draws the attendance plot.
+     * @param studentMap contains the data for the plot
+     */
     public void plot(HashMap<String, Student> studentMap) {
         SwingUtilities.invokeLater(()-> {
             Plot plot = new Plot(studentMap, "Count of Students on Percent of Attendance by Date");
@@ -191,20 +217,22 @@ public class RosterView extends JFrame {
     }
 
     /**
-     *
+     * Populates a File Chooser for the user to select a file load.
      * @return
      */
     public File openFileChooser() {
-        File f;
+        File f = null;
         JFileChooser fc = new JFileChooser();
         int returnVal = fc.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION){
             f = fc.getSelectedFile();
-            return f;
         }
-        return null;
+        return f;
     }
 
+    /**
+     * Creates a pop-up letting the user know the data was saved.
+     */
     public void saveMessage(){
         JDialog saveDialog = new JDialog(this, "Data Saved", true);
         saveDialog.setSize(SAVE_WIDTH, SAVE_HEIGHT);

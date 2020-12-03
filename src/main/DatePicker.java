@@ -1,13 +1,18 @@
 package main;
 
+/*
+ * @author: Taken from https://blog.eduonix.com/java-programming-2/how-to-use-date-picker-component-in-java/
+ * ClassID: 2020Fall-T-CSE360-70606
+ *  FINAL PROJECT
+ */
+
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
 
-/**
- * Taken from...
- */
 class DatePicker {
     //define variables
     int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
@@ -129,9 +134,13 @@ class DatePicker {
         return sdf.format(cal.getTime());
     }
 
-    public Date getPickedDate() {
+    public String getPickedDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         cal.set(year, month, Integer.parseInt(day));
-        return cal.getTime();
+        Date date = cal.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        String simpleDate = null;
+        simpleDate = sdf.format(date);
+        return simpleDate;
     }
 }

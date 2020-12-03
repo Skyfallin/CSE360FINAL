@@ -1,22 +1,29 @@
 package main;
 
-import org.jfree.chart.JFreeChart;
+/*
+ * @author: Jessica Huber and Dimetrius Hightower
+ * ClassID: 2020Fall-T-CSE360-70606
+ *  FINAL PROJECT
+ */
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
 
+/**
+ * The RosterController class is used to handle action events
+ * from the GUI. It fulfills the ''controller' part of the
+ * model, view, controller.
+ */
 public class RosterController implements ActionListener {
     private final int PLOT_HEIGHT = 350, PLOT_WIDTH = 700;
     private final RosterModel rosterModel;
     private final RosterView rosterView;
 
     /**
-     *
+     * Roster controller constructor.
      * @param rosterModel
      * @param rosterView
      */
@@ -26,7 +33,7 @@ public class RosterController implements ActionListener {
     }
 
     /**
-     *
+     * Invoked when an action occurs in the view.
      * @param e
      */
     @Override
@@ -47,7 +54,7 @@ public class RosterController implements ActionListener {
             case "Add Attendance": {
                 File file = rosterView.openFileChooser();
                 if (file != null) {
-                    Date date = rosterModel.takeAttendance(file, new DatePicker(rosterView).getPickedDate());
+                    String date = rosterModel.takeAttendance(file, new DatePicker(rosterView).getPickedDate());
                     rosterView.addAttendance(rosterModel.getStudentMap(), rosterModel.getAttendanceMap(), rosterModel.getDates(), date);
                 }
                 break;

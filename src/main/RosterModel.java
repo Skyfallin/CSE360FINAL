@@ -1,16 +1,29 @@
 package main;
 
+/*
+ * @author: Jessica Huber and Dimetrius Hightower
+ * ClassID: 2020Fall-T-CSE360-70606
+ *  FINAL PROJECT
+ */
+
 import java.io.*;
 import java.util.*;
 
+/**
+ * The Model class contains the data used in the system and provides an API for
+ * interacting with the data. Fulfills the model part of the model, view,
+ * controller architecture.
+ */
 public class RosterModel {
     private final char NEW_LINE= '\n', COMMA= ',';
+    private final int ASURITE_INDEX = 5;
     HashMap<String, Student> studentMap = new HashMap<>();
     HashMap<String, Integer> attendanceMap = new HashMap<>();
-    ArrayList<Date> dates = new ArrayList<>();
+    ArrayList<String> dates = new ArrayList<>();
+
     /**
-     *
-     * @param file
+     * Adds the data from the file to the student hashmap data structure.
+     * @param file object
      */
     public void createStudentMap(File file) {
         studentMap.clear();
@@ -23,7 +36,7 @@ public class RosterModel {
             while(line != null) {
                 String[] attributes = line.split(",");
                 Student student = createStudent(attributes);
-                studentMap.put(attributes[5], student);
+                studentMap.put(attributes[ASURITE_INDEX], student);
                 line = br.readLine();
             }
         } catch(IOException e) {
@@ -34,9 +47,9 @@ public class RosterModel {
     }
 
     /**
-     *
-     * @param attributes
-     * @return
+     * Creates students.  Helper method for createStudentMap.
+     * @param attributes String[]
+     * @return new Student object
      */
     private Student createStudent(String[] attributes) {
         String id = attributes[0];
@@ -50,10 +63,12 @@ public class RosterModel {
     }
 
     /**
-     *
-     * @param file
+     * Updates the attendance data with new data from file.  Updates each student
+     * attendance and attendance hashmap.  Also stores the date.
+     * @param file File
+     * @param date String
      */
-    public Date takeAttendance(File file, Date date) {
+    public String takeAttendance(File file, String date) {
         dates.add(date);
         attendanceMap.clear();
         try {
@@ -85,6 +100,10 @@ public class RosterModel {
         return date;
     }
 
+    /**
+     *  Saves the student hashmap data into a new file.
+     * @param filePath String
+     */
     public void save(String filePath){
         try {
             File outputFile = new File(filePath);
@@ -94,7 +113,7 @@ public class RosterModel {
             StringBuilder writeLine;
             //HEADER
             writeLine = new StringBuilder("ID,First Name,Last Name,Program and Plan,Academic Level,ASURITE");
-            for (Date date : dates) {
+            for (String date : dates) {
                 writeLine.append(COMMA).append(date);
             }
             bw.write(writeLine.toString() + NEW_LINE);
@@ -107,7 +126,7 @@ public class RosterModel {
                         .append(student.getProgramPlan()).append(COMMA)
                         .append(student.getAcademicLevel()).append(COMMA)
                         .append(student.getAsurite());
-                for (Date date: dates){
+                for (String date: dates){
                     writeLine.append(COMMA).append(student.getAttendance().get(date));
                 }
                 bw.write(writeLine.toString() + NEW_LINE);
@@ -120,16 +139,24 @@ public class RosterModel {
     }
 
     /**
-     *
-     * @return
+     * Student hashmap getter.
+     * @return studentMap
      */
     public HashMap<String, Student> getStudentMap() {
         return studentMap;
     }
 
+    /**
+     * Attendance hashmap getter.
+     * @return attendanceMap
+     */
     public HashMap<String, Integer> getAttendanceMap(){ return attendanceMap; }
 
-    public ArrayList<Date> getDates(){
+    /**
+     * Dates hashmap getter.
+     * @return dates
+     */
+    public ArrayList<String> getDates(){
         return dates;
     }
 }
