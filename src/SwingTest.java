@@ -1,7 +1,3 @@
-package test;
-
-import main.Roster;
-import main.RosterController;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

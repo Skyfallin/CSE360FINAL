@@ -1,5 +1,3 @@
-package main;
-
 /*
  * @author: Taken from https://blog.eduonix.com/java-programming-2/how-to-use-date-picker-component-in-java/
  * ClassID: 2020Fall-T-CSE360-70606

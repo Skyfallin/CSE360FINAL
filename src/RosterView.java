@@ -1,5 +1,3 @@
-package main;
-
 /*
  * @author: Jessica Huber and Dimetrius Hightower
  * ClassID: 2020Fall-T-CSE360-70606
